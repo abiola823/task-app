@@ -20,5 +20,5 @@ app.listen(port, () => {
 app.use(express.json());
 app.use("/v1/tasks", taskRoute);
 app.use("/v1/auth", authRoute);
-
+app.use(express.urlencoded({extended: false}));
 
