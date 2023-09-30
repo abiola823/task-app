@@ -17,8 +17,9 @@ connect.then( (connect) =>
 app.listen(port, () => {
     console.log('listening on port 3000');
 });
+app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use("/v1/tasks", taskRoute);
 app.use("/v1/auth", authRoute);
-app.use(express.urlencoded({extended: false}));
+
 
