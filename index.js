@@ -4,6 +4,8 @@ const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const taskRoute = require("./Routes/tasks")
 const authRoute = require("./Routes/auth");
+const multer = require("multer");
+const upload = multer({dest: "public/"});
 
 require("dotenv").config();
 const path = require("path")
@@ -20,6 +22,28 @@ app.listen(port, () => {
     console.log('listening on port 3000');
 });
 
+app.post("/pic", upload.single("file"), async (req, res) => {
+
+    try {
+        const {taskTitle, taskBody} = req.body;
+    const {filename} = req.file;
+    const {userId} = req.decoded;
+  
+    console.log(req.file);
+    
+  
+    const newTask = await taskCollection.create({
+        taskTitle, taskBody, pictureName: filename, user: userId
+    });
+  
+    res.send({
+        successful: true,
+        newTask
+    });
+  
+    } catch (error) {
+        res.status(500).json({message: "Internal server error"});
+    }});
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, "public")));
@@ -27,6 +51,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/v1/tasks", taskRoute);
 app.use("/v1/auth", authRoute);
-app.use("/v1/upload-pic");
+// app.use("/v1/upload-pic");
 
 
