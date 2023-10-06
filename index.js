@@ -26,7 +26,7 @@ app.listen(port, () => {
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, "public/")));
+app.use(express.static(path.join(__dirname, "public")));
 
 
 app.use("/v1/tasks", taskRoute);
