@@ -8,9 +8,15 @@ const multer = require("multer");
 const upload = multer({dest: "public/"});
 const { taskCollection } = require("./schema/taskSchema");
 const { isUserLoggedIn } = require("./Routes/middleware"); 
-
+const cloudinary = require('cloudinary').v2;
 //const uploadPic = require("./Routes/uploadPics");
 require("dotenv").config();
+          
+cloudinary.config({ 
+  cloud_name: 'dvath2mbr', 
+  api_key: '854468231274331', 
+  api_secret: 'JUt2uC0zABagK57y-YJHLruF5SQ' 
+});
 const path = require("path")
 
 
@@ -35,7 +41,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/v1/tasks", taskRoute);
 app.use("/v1/auth", authRoute);
 
-app.post("/pic", upload.single("file"), async (req, res) => {
+app.post("/pic", upload.single("filename"), async (req, res) => {
 
     try {
         const {taskTitle, taskBody} = req.body;
@@ -43,7 +49,7 @@ app.post("/pic", upload.single("file"), async (req, res) => {
     const {userId} = req.decoded;
   
     console.log(req.file);
-    
+    cloudinary.uploader.upload({})
   
     const newTask = await taskCollection.create({
         taskTitle, taskBody, pictureName: originalname, user: userId
