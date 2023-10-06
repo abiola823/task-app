@@ -7,7 +7,7 @@ const authRoute = require("./Routes/auth");
 const multer = require("multer");
 const upload = multer({dest: "public/"});
 const { taskCollection } = require("./schema/taskSchema");
-const { isUserLoggedIn } = require("./Routes/middlewares"); 
+const { isUserLoggedIn } = require("./Routes/middleware"); 
 
 //const uploadPic = require("./Routes/uploadPics");
 require("dotenv").config();
