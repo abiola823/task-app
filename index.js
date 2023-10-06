@@ -39,14 +39,14 @@ app.post("/pic", upload.single("file"), async (req, res) => {
 
     try {
         const {taskTitle, taskBody} = req.body;
-    const {filename} = req.file;
+    const {originalname} = req.file;
     const {userId} = req.decoded;
   
     console.log(req.file);
     
   
     const newTask = await taskCollection.create({
-        taskTitle, taskBody, pictureName: filename, user: userId
+        taskTitle, taskBody, pictureName: originalname, user: userId
     });
   
     res.send({
