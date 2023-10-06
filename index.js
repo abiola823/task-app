@@ -6,9 +6,11 @@ const taskRoute = require("./Routes/tasks")
 const authRoute = require("./Routes/auth");
 const multer = require("multer");
 const upload = multer({dest: "public/"});
-
+//const uploadPic = require("./Routes/uploadPics");
 require("dotenv").config();
 const path = require("path")
+
+
 
 
 const connect = mongoose.connect(process.env.mongoDBURL);
@@ -21,6 +23,14 @@ connect.then( (connect) =>
 app.listen(port, () => {
     console.log('listening on port 3000');
 });
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, "public/")));
+
+
+app.use("/v1/tasks", taskRoute);
+app.use("/v1/auth", authRoute);
 
 app.post("/pic", upload.single("file"), async (req, res) => {
 
@@ -43,14 +53,9 @@ app.post("/pic", upload.single("file"), async (req, res) => {
   
     } catch (error) {
         res.status(500).json({message: "Internal server error"});
-    }});
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, "public")));
+    }
+  });
 
-
-app.use("/v1/tasks", taskRoute);
-app.use("/v1/auth", authRoute);
-// app.use("/v1/upload-pic");
+//app.use("/v1/upload-pic", uploadPic);
 
 

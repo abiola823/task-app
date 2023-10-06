@@ -31,13 +31,10 @@
 
 
 // const prompt = require("prompt");
-// const prompt2 = require("prompt");
 // prompt.start();
-// prompt2.start();
 // function standBy() {
 // prompt.get("cartSimulator",  (err,res) => {
 //   let userInput1 = res.cartSimulator;
-//   let userInput2 = res.cartSimulator;
 //   const cart = {
 //     cartArray: () => {[]},
 //     addToCart: (item) => {
@@ -77,3 +74,12 @@
 
 // }
 // standBy();
+
+const readLine = require('readline');
+const rl = readLine.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+rl.on('line', (line) => {
+
+})
